@@ -9,7 +9,171 @@
   --action-color: rgb(58, 99, 197);
   --border-color: darkgray;
 }
-
+.App {
+}
 .App li{
   list-style: none;
+  border-collapse: collapse;
+}
+
+.class1{
+  border: 1px solid #ccc;
+  padding: 0;
+  margin: 0;
+  width: 240px;
+  height: 100vh;
+}
+.class2{
+  flex: 1;
+  border: 1px solid #ccc;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.menuTab {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px;
+  height: 50px;
+  border: 1px solid darkgray;
+
+}
+.memoList {
+  border: 1px solid darkgray;
+}
+.menuTab button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+
+}
+.menuTab2{
+  display: flex;
+  justify-content: space-between;
+  padding: 0px;
+  height: 50px;
+  border: 1px solid #ccc;
+}
+.menuTab2 button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+}
+
+.markDown{
+  visibility: hidden;
+  display: flex;
+  background-color: #f4f4f4;
+  border: 1px solid #f4f4f4;
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  padding-top: 25vh;
+  width: 100%;
+  height: 100%;
+
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 20px;
+  width: 35%;
+}
+.pList{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pList li{
+  padding-bottom: 10px;
+}
+.pList input{
+  width: 100%;
+}
+.pTab button{
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+.pTab, .pTab3{
+  display: flex;
+  padding: 0;
+  margin: 0;
+  justify-content: space-between;
+}
+.save{
+  width: 75px;
+  height: 35px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(58, 99, 197);
+  color: #ffffff;
+}
+.logout{
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+@media all and (min-width: 700px) {
+
+  .memo {
+    display: flex;
+    align-items: flex-start;
+    height: 100vh;
+    width: 70%;
+    padding: 0;
+    margin: 0;
+  }
+  .markDown{
+    align-items: flex-start;
+    visibility: visible;
+    display: flex;
+    background-color: #f4f4f4;
+    border: 1px solid #f4f4f4;
+    height: 100vh;
+    width:30%;
+  }
+
+}
+@media all and (max-width: 500px) {
+  .class2{
+    flex: 1;
+    border: 1px solid #ccc;
+    height: 100vh;
+  }
+
+  .back {
+    visibility: visible;
+  }
+
+  .modal{
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .modal-content {
+    display: flex;
+    background-color: #fefefe;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    justify-content: center;
+  }
 }
