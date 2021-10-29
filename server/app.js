@@ -47,7 +47,7 @@ app.post('/api/notes', wrapAsync(async function (req, res) {
 app.put('/api/notes/:id', wrapAsync(async function (req, res) {
     const id = req.params.id;
     console.log("PUT with id: " + id + ", body: " + JSON.stringify(req.body));
-    await Note.findByIdAndUpdate(id, {'text': req.body.text, "lastUpdatedDate": req.body.lastUpdatedDate},
+    await Note.findByIdAndUpdate(id, {'text': req.body.text, "lastUpdatedDate": req.body.lastUpdatedDate, 'num': req.body.num},
         {runValidators: true});
     res.sendStatus(204);
 }));

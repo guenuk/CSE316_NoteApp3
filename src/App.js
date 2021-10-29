@@ -44,7 +44,7 @@ function App() {
             setNotes(note);
         })
     },[renderEffect])
-    //
+
     // useEffect(()=> {
     //     getNotesAPIMethod().then((note) => {
     //         setNotes(note);
@@ -62,7 +62,7 @@ function App() {
     const findNote = (id) => {
         let i =0;
         // let result = -1;
-        let result = "NOTE NOT FOUND"
+        let result = ""
         notes.map(note => {
             if(note.num == id){
                 result = notes[i].text;
@@ -122,11 +122,11 @@ function App() {
         const today = new Date();
         const todayD = (today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear();
         // console.log(currMemo)
-        console.log(findNoteIndex(currMemo));
-        console.log(notes);
-        getNotesAPIMethod().then((note)=> {
-            console.log(note);
-        })
+        // console.log(findNoteIndex(currMemo));
+        // console.log(notes);
+        // getNotesAPIMethod().then((note)=> {
+        //     console.log(note);
+        // })
         // setRenderEffect(!renderEffect);
         console.log(currMemo)
 
@@ -137,12 +137,29 @@ function App() {
         };
         const newArr = [...notes.slice(0, findNoteIndex(currMemo)), ...notes.slice(findNoteIndex(currMemo)+1), newItem];
         setNotes(newArr);
+
+        // notes[findNoteIndex(newItem.num)] = newItem;
+        // setRenderEffect(!renderEffect)
+
         getNotesAPIMethod().then((note)=> {
-            updateNotesAPIMethod(note[findNoteIndex(currMemo)], newItem).then({
+            const findIndex = (num) => {
+                let i =0;
+                let result = -1;
+                note.map(n => {
+                    if(n.num == num){
+                        result = i;
+                        return result;
+                    }
+                    i++;
+                })
+                return result;
+            }
+            console.log(currMemo);
+            console.log(findIndex(currMemo));
+            updateNotesAPIMethod(note[findIndex(currMemo)], newItem).then({
             })
         })
         setCurrMemo(newItem.num);
-
     };
 
     const deleteNote = () => {
