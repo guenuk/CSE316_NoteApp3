@@ -99,6 +99,7 @@ function App() {
 
     const selectNote = (i) => {
       setCurrMemo(i);
+      setbackToggle(!backToggle);
     }
 
     const addNote = () => {
@@ -212,6 +213,14 @@ function App() {
                     <button onClick={()=> deleteNote()}>
                         <span className="material-icons">delete_outline</span>
                     </button>
+                </div>
+            </li>
+            <li>
+                <div className="searchTab">
+                    <button>
+                        <span className="material-icons">search</span>
+                    </button>
+                    <p> Search all notes </p>
                 </div>
             </li>
             <li className= "memos">

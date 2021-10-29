@@ -16,6 +16,21 @@
   border-collapse: collapse;
 }
 
+.searchTab {
+  display: flex;
+  padding: 0px;
+  border: 1px solid #ccc;
+}
+.searchTab button, p {
+  border: none;
+  margin-right: 20px;
+  background-color: transparent;
+  outline: none;
+}
+.searchTab p{
+  color: #657786;
+}
+
 .class1{
   border: 1px solid #ccc;
   padding: 0;
