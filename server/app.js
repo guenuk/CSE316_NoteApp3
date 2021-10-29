@@ -37,6 +37,7 @@ app.get('/api/notes', wrapAsync(async function (req,res) {
 app.post('/api/notes', wrapAsync(async function (req, res) {
     console.log("Posted with body: " + JSON.stringify(req.body));
     const newNote = new Note({
+        num: req.body.num,
         text: req.body.text,
         lastUpdatedDate: req.body.lastUpdatedDate,
     })

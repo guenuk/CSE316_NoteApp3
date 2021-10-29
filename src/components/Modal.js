@@ -23,6 +23,7 @@ function Modal(props) {
             localStorage.setItem('iLocation', event.target.value);
         }
     }
+
     useEffect(()=>{
         setEmail(localStorage.getItem('iEmail'));
         setName(localStorage.getItem('iName'));
