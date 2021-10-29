@@ -163,6 +163,29 @@ function App() {
     };
 
     const deleteNote = () => {
+        if(currMemo != -1){
+            const newArr = [...notes.slice(0, findNoteIndex(currMemo)), ...notes.slice(findNoteIndex(currMemo)+1)];
+            setNotes(newArr);
+
+            getNotesAPIMethod().then((note) => {
+                const findIndex = (num) => {
+                    let i =0;
+                    let result = -1;
+                    note.map(n => {
+                        if(n.num == num){
+                            result = i;
+                            return result;
+                        }
+                        i++;
+                    })
+                    return result;
+                }
+                deleteNotesAPIMethod(note[findIndex(currMemo)]).then(()=>{
+                    setCurrMemo(-1);
+                });
+            })
+        }
+
 
     }
 
@@ -186,7 +209,7 @@ function App() {
                         <p style={{fontWeight: "bold"}}>My Notes</p>
                     </button>
 
-                    <button>
+                    <button onClick={()=> deleteNote()}>
                         <span className="material-icons">delete_outline</span>
                     </button>
                 </div>
