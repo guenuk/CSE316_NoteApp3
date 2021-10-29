@@ -39,6 +39,41 @@ export const postNoteAPIMethod = (note) => {
         .then(parseJSON);
 }
 
+
+export const getUsersAPIMethod = () => {
+    return fetch(`/api/users`, {
+        ...defaultHeaders,
+    }).then(checkStatus)
+        .then(parseJSON);
+}
+
+export const updateUsersAPIMethod = (user , nUser) => {
+    console.log(user);
+    return fetch(`/api/users/${user._id}`, {
+        ...defaultHeaders,
+        method: 'PUT',
+        body: JSON.stringify(nUser),
+    }).then(checkStatus);
+}
+
+export const deleteUsersAPIMethod = (user) => {
+    console.log(user);
+    return fetch(`/api/users/${user._id}`, {
+        ...defaultHeaders,
+        method: 'DELETE',
+    }).then(checkStatus)
+        .then(parseJSON);
+}
+
+export const postUserAPIMethod = (user) => {
+    return fetch(`/api/users`, {
+        ...defaultHeaders,
+        method: 'POST', // The method defaults to GET
+        body: JSON.stringify(user),
+    }).then(checkStatus)
+        .then(parseJSON);
+}
+
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
 

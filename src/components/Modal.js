@@ -1,5 +1,6 @@
 import react, {useEffect, useState} from "react";
 import React from "react";
+import {getUsersAPIMethod, updateUsersAPIMethod} from "../api/client";
 
 function Modal(props) {
     const [name, setName] = useState();
@@ -7,29 +8,57 @@ function Modal(props) {
     const [location,setLocation] = useState();
     const [profileToggle,setProfileToggle] = useState(props.profileToggle);
 
+    useEffect(() => {
+        getUsersAPIMethod().then( user => {
+            setName(user[0].name);
+            setEmail(user[0].email);
+            setLocation(user[0].location);
+        })
+    },[])
+
 
 
     let handleChange = (prop) => (event) => {
         if (prop === "name"){
             setName(event.target.value);
-            localStorage.setItem('iName', event.target.value);
+            const newUser = {
+                'name': event.target.value,
+                'email' : email,
+                'location' : location
+            }
+            getUsersAPIMethod().then(user => {
+                const user1 = user[0];
+                updateUsersAPIMethod(user1, newUser).then();
+            })
         }
         else if (prop === "email"){
             setEmail(event.target.value);
-            localStorage.setItem('iEmail', event.target.value);
+            const newUser = {
+                'name': name,
+                'email' : event.target.value,
+                'location' : location
+            }
+            getUsersAPIMethod().then(user => {
+                const user1 = user[0];
+                updateUsersAPIMethod(user1, newUser).then();
+            })
         }
         else if (prop === "location"){
             setLocation(event.target.value);
-            localStorage.setItem('iLocation', event.target.value);
+            const newUser = {
+                'name': name,
+                'email' : email,
+                'location' : event.target.value
+            }
+            getUsersAPIMethod().then(user => {
+                const user1 = user[0];
+                updateUsersAPIMethod(user1, newUser).then();
+            })
         }
     }
 
     useEffect(()=>{
-        setEmail(localStorage.getItem('iEmail'));
-        setName(localStorage.getItem('iName'));
-        setLocation(localStorage.getItem('iLocation'));
         setProfileToggle(props.profileToggle)
-        console.log('useEffect')
     },[props])
 
     const pClose = () => {
