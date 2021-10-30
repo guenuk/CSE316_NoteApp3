@@ -11,26 +11,15 @@ import Memo from "./components/Memo";
 
 function App() {
 
-    // testcode
-    let test = [
-        {id: 6, lastUpdatedDate: "10/28/2021", text: "New Note"},
-        {id: 4, lastUpdatedDate: "8/17/2021", text: "This is a note with a long line of text"},
-        {id: 2, lastUpdatedDate: "8/10/2021", text: "CSE316"},
-        {id: 0, lastUpdatedDate: "7/16/2021", text: "CSE416"},
-    ];
-
-    // getNotesAPIMethod().then((note) => {
-    //     localStorage.setItem('NOTE', JSON.stringify(note));
-    // })
-
     const [notes, setNotes] = useState([]);
-    // const [notes, setNotes] = useState(test);
     const [currMemo, setCurrMemo] = useState(-1);
+    const [searchKey, setSearchKey] = useState("");
     const [backToggle, setbackToggle] = useState(false);
     const [profileToggle, setProfileToggle] = useState(false);
-
+    const [searchToggle, setSearchToggle] = useState(false); //false when searchKey.length == 0
     const [renderEffect, setRenderEffect] = useState(false);
 
+    //init val from server
     useEffect(()=>{
         getNotesAPIMethod().then((note) => {
             setNotes(note);
@@ -45,14 +34,7 @@ function App() {
         })
     },[renderEffect])
 
-    // useEffect(()=> {
-    //     getNotesAPIMethod().then((note) => {
-    //         setNotes(note);
-    //     })
-    // },[currMemo])
-
     // helpers
-
     const uidGen = () => {
         let curr = JSON.parse(localStorage.getItem('UID'));
         localStorage.setItem('UID', curr+1);
@@ -90,11 +72,14 @@ function App() {
     };
     let width = GetWidth();
 
-    // essentials
 
+
+    // essentials
     let handleChange = (e) => {
         editNote(e.target.value);
-        // setNotes(JSON.parse(localStorage.getItem('NOTE')));
+    }
+    let handleChange2 = (e) => {
+        setSearchKey(e.target.value);
     }
 
     const selectNote = (i) => {
@@ -103,6 +88,7 @@ function App() {
     }
 
     const addNote = () => {
+        setSearchKey("");
         const today = new Date();
         const todayD = (today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear();
         const newItem = {
@@ -122,15 +108,6 @@ function App() {
     const editNote = (nText) => {
         const today = new Date();
         const todayD = (today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear();
-        // console.log(currMemo)
-        // console.log(findNoteIndex(currMemo));
-        // console.log(notes);
-        // getNotesAPIMethod().then((note)=> {
-        //     console.log(note);
-        // })
-        // setRenderEffect(!renderEffect);
-        console.log(currMemo)
-
         const newItem = {
             num: uidGen(),
             lastUpdatedDate: todayD,
@@ -138,9 +115,6 @@ function App() {
         };
         const newArr = [...notes.slice(0, findNoteIndex(currMemo)), ...notes.slice(findNoteIndex(currMemo)+1), newItem];
         setNotes(newArr);
-
-        // notes[findNoteIndex(newItem.num)] = newItem;
-        // setRenderEffect(!renderEffect)
 
         getNotesAPIMethod().then((note)=> {
             const findIndex = (num) => {
@@ -189,93 +163,110 @@ function App() {
 
 
     }
+    const filterItems = (arr, query) => {
+        return arr.filter(el => el.text.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+    }
 
-    console.log(notes);
-    let tempC = currMemo;
-    let temp = findNote(currMemo);
     let sorted = notes.sort(function (a,b) {
         return b["num"] - a["num"]
     })
-  return (
-    <div className="App" style= {{display:'flex'}}>
-      <div className="class1" style={!(backToggle || width>500) ? {display: 'none'} : (backToggle && width<=500) ? {width: '100%', height: '100%'} :{visibility: 'visible'}}>
-        <ul className="tabs" style={{margin: 0, padding: 0}}>
-            <li>
-                <div className="menuTab" style={{display: 'flex'}}>
-                    <button onClick={() => setProfileToggle(true)}>
-                        <img src= {"./profile.JPG"} style={{width: '40px', borderRadius: '50%'}}/>
-                    </button>
 
-                    <button>
-                        <p style={{fontWeight: "bold"}}>My Notes</p>
-                    </button>
+    console.log(sorted)
+    console.log(filterItems(sorted, "1"));
+    sorted.map((note) => {
+        console.log(note);
+    })
 
-                    <button onClick={()=> deleteNote()}>
-                        <span className="material-icons">delete_outline</span>
-                    </button>
-                </div>
-            </li>
-            <li>
-                <div className="searchTab">
-                    <button>
-                        <span className="material-icons">search</span>
-                    </button>
-                    <p> Search all notes </p>
-                </div>
-            </li>
-            <li className= "memos">
-                <ul style={{padding:0, margin: 0}}>
-                    {/*{(notes)?notes.map(memo => (*/}
-                    {/*    <Memo*/}
-                    {/*          date={memo.lastUpdatedDate}*/}
-                    {/*          text={memo.text}*/}
-                    {/*          id={memo.num}*/}
-                    {/*          selectNote = {selectNote}*/}
-                    {/*          currMemo = {currMemo}*/}
-                    {/*    />*/}
-                    {/*)):<></>}*/}
-                    {(sorted)?sorted.map(memo => (
-                        <Memo
-                            lastUpdatedDate={memo.lastUpdatedDate}
-                            text={memo.text}
-                            id={memo.num}
-                            selectNote = {selectNote}
-                            currMemo = {currMemo}
-                        />
-                    )):<></>}
-                </ul>
-            </li>
-        </ul>
-      </div>
-      <div className="class2" style={backToggle && width<=500 ? {display: 'none'}: {visibility: 'visible'}}>
-        <ul style={{margin: 0, padding: 0}}>
-            <li>
-                <div className="menuTab2" style={{display: 'flex'}}>
-                    <button className="back" style={{visibility: width<500 ? 'visible':'hidden'}} onClick={()=> setbackToggle(!backToggle)}>
-                        <span className="material-icons">arrow_back</span>
-                    </button>
-                    <button onClick={() => addNote()}>
-                        <span className="material-icons">note_add</span>
-                    </button>
-                </div>
-            </li>
-            <li className= "memoInput" style={{display: 'flex'}}>
-                <div className="memo" >
-                    <input type="text"
-                           onChange={handleChange}
-                           value={currMemo==-1? "": findNote(currMemo)}
-                           style={{visibility: 'visible', border: 'none'}}>
-                    </input>
-                </div>
-                <div className="markDown" style={{padding:0, margin: 0 }}>
-                    <ReactMarkdown children={currMemo == -1 ? "":findNote(currMemo)} remarkPlugins={[remarkGfm]} />
-                </div>
-            </li>
-        </ul>
-      </div>
-        <Modal profileToggle = {profileToggle}></Modal>
-    </div>
-  );
+    return (
+        <div className="App" style= {{display:'flex'}}>
+          <div className="class1" style={!(backToggle || width>500) ? {display: 'none'} : (backToggle && width<=500) ? {width: '100%', height: '100%'} :{visibility: 'visible'}}>
+            <ul className="tabs" style={{margin: 0, padding: 0}}>
+                <li>
+                    <div className="menuTab" style={{display: 'flex'}}>
+                        <button onClick={() => setProfileToggle(true)}>
+                            <img src= {"./profile.JPG"} style={{width: '40px', borderRadius: '50%'}}/>
+                        </button>
+                        <button>
+                            <p style={{fontWeight: "bold"}}>My Notes</p>
+                        </button>
+                        <button onClick={()=> deleteNote()}>
+                            <span className="material-icons">delete_outline</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div className="searchTab">
+                        <button>
+                            <span className="material-icons">search</span>
+                        </button>
+                        <label style={{fontWeight: 'small'}}>Search all notes: </label>
+                        <input type="text"
+                               id="iSearch"
+                               name="Search"
+                               value = {searchKey}
+                               style={{border: 'none'}}
+                               onChange={handleChange2}>
+                        </input>
+                    </div>
+                </li>
+                <li className= "memos">
+                    <ul style={{padding:0, margin: 0}}>
+                        {(searchKey.length !== 0)?
+                            //search enabled
+                            ((filterItems(sorted, searchKey))?filterItems(sorted, searchKey).map(memo => (
+                                <Memo
+                                    lastUpdatedDate={memo.lastUpdatedDate}
+                                    text={memo.text}
+                                    id={memo.num}
+                                    selectNote = {selectNote}
+                                    currMemo = {currMemo}
+                                />)) : <></>):
+                            //search disabled
+                            ((sorted)?sorted.map(memo => (
+                                <Memo
+                                    lastUpdatedDate={memo.lastUpdatedDate}
+                                    text={memo.text}
+                                    id={memo.num}
+                                    selectNote = {selectNote}
+                                    currMemo = {currMemo}
+                                />
+                            )):<></>)
+                        }
+
+
+                    </ul>
+                </li>
+            </ul>
+          </div>
+          <div className="class2" style={backToggle && width<=500 ? {display: 'none'}: {visibility: 'visible'}}>
+            <ul style={{margin: 0, padding: 0}}>
+                <li>
+                    <div className="menuTab2" style={{display: 'flex'}}>
+                        <button className="back" style={{visibility: width<500 ? 'visible':'hidden'}} onClick={()=> setbackToggle(!backToggle)}>
+                            <span className="material-icons">arrow_back</span>
+                        </button>
+                        <button onClick={() => addNote()}>
+                            <span className="material-icons">note_add</span>
+                        </button>
+                    </div>
+                </li>
+                <li className= "memoInput" style={{display: 'flex'}}>
+                    <div className="memo" >
+                        <input type="text"
+                               onChange={handleChange}
+                               value={currMemo==-1? "": findNote(currMemo)}
+                               style={{visibility: 'visible', border: 'none'}}>
+                        </input>
+                    </div>
+                    <div className="markDown" style={{padding:0, margin: 0 }}>
+                        <ReactMarkdown children={currMemo == -1 ? "":findNote(currMemo)} remarkPlugins={[remarkGfm]} />
+                    </div>
+                </li>
+            </ul>
+          </div>
+            <Modal profileToggle = {profileToggle}></Modal>
+        </div>
+    );
 }
 
 export default App;
