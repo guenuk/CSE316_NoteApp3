@@ -1,5 +1,6 @@
 import react, {useEffect, useState} from "react";
 import React from "react";
+import {registerUserAPIMethod} from "../api/client";
 
 function SignUp(props) {
     const [name, setName] = useState();
@@ -14,6 +15,15 @@ function SignUp(props) {
     useEffect(()=>{
         setSignT(props.signT)
     },[props])
+
+    const testRegister = () => {
+        const user1 = {
+            "password" : pw,
+            "email" : email,
+            "name" : name
+        }
+        registerUserAPIMethod(user1).then();
+    }
 
     let handleChange = (prop) => (event) => {
         if (prop === "name"){
@@ -68,7 +78,7 @@ function SignUp(props) {
                                onChange={handleChange("pw")}></input>
                     </li>
                     <li>
-                        <button type="submit" style={{width: '30%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'green',color: '#ffffff'}}>Save</button>
+                        <button onClick={testRegister} type="submit" style={{width: '30%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'green',color: '#ffffff'}}>Save</button>
                     </li>
                 </form>
             </div>

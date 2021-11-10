@@ -78,9 +78,26 @@ export const registerUserAPIMethod = (user) => {
         ...defaultHeaders,
         method: 'POST', // The method defaults to GET
         body: JSON.stringify(user),
+
     }).then(checkStatus)
         .then(parseJSON);
 }
+export const logInUserAPIMethod = (user) => {
+    return fetch(`/api/login`, {
+        ...defaultHeaders,
+        method: 'POST', // The method defaults to GET
+        body: JSON.stringify(user),
+    }).then(checkStatus)
+        .then(parseJSON);
+}
+
+export const logOutUserAPIMethod = () => {
+    return fetch(`/api/logout`, {
+        ...defaultHeaders,
+    }).then(checkStatus)
+        .then(parseJSON);
+}
+
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {

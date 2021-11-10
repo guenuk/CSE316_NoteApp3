@@ -40,14 +40,7 @@ function Main() {
         })
     },[renderEffect])
 
-    const testRegister = () => {
-        const user1 = {
-            "password" : "123456",
-            "email" : "123asd@naver.com",
-            "name" : "a1"
-        }
-        registerUserAPIMethod(user1).then();
-    }
+
 
     // helpers
     const uidGen = () => {

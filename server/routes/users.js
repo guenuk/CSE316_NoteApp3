@@ -5,6 +5,7 @@ const {wrapAsync} = require('../utils/helper');
 
 router.post('/register', wrapAsync(async function (req, res) {
     const {password, email, name} = req.body;
+    // const found = await this.findOne({email});
     const user = new User({email, password, name})
     await user.save();
     req.session.userId = user._id;
