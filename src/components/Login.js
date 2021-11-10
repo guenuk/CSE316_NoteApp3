@@ -35,48 +35,50 @@ function Login(){
 
     return (
         <div className='loginPage'>
-            <ul style={{listStyle: 'none' , padding: 0}}>
-                <h1 style={{textAlign: 'center'}}>
-                    Notes
-                </h1>
-                <h2 style={{textAlign: 'center'}}>
-                    Organize all your thoughts in one place.
-                </h2>
+            <div>
+                <ul style={{listStyle: 'none' , padding: 0}}>
+                    <h1 style={{textAlign: 'center'}}>
+                        Notes
+                    </h1>
+                    <h2 style={{textAlign: 'center'}}>
+                        Organize all your thoughts in one place.
+                    </h2>
 
-                <li>
-                    <div className='login-content'>
-                        <form style = {{textAlign: 'center'}}>
-                            <li id="email">
-                                <p style={{margin: 0, textAlign: 'left'}}>Email</p>
-                                <input type="text"
-                                       id="iEmail"
-                                       name="Email"
-                                       value = {email}
-                                       style={{width: '100%' ,height: '20px'}}
-                                       onChange={handleChange("email")}></input>
-                            </li>
-                            <li id="password">
-                                <p style={{margin: 0, textAlign: 'left'}}>Password</p>
-                                <input type="text"
-                                       id="iPw"
-                                       name="pw"
-                                       value = {pw}
-                                       style={{width: '100%', height: '20px'}}
-                                       onChange={handleChange("pw")}></input>
-                            </li>
+                    <li>
+                        <div className='login-content'>
+                            <form style = {{textAlign: 'center'}}>
+                                <li id="email">
+                                    <p style={{margin: 0, textAlign: 'left'}}>Email</p>
+                                    <input type="text"
+                                           id="iEmail"
+                                           name="Email"
+                                           value = {email}
+                                           style={{width: '100%' ,height: '20px'}}
+                                           onChange={handleChange("email")}></input>
+                                </li>
+                                <li id="password">
+                                    <p style={{margin: 0, textAlign: 'left'}}>Password</p>
+                                    <input type="text"
+                                           id="iPw"
+                                           name="pw"
+                                           value = {pw}
+                                           style={{width: '100%', height: '20px'}}
+                                           onChange={handleChange("pw")}></input>
+                                </li>
 
-                            <li>
-                                <button type="submit" style={{width: '100%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'rgb(58, 99, 197)',color: '#ffffff'}}>Log in</button>
-                            </li>
-                            <hr></hr>
+                                <li>
+                                    <button type="submit" style={{width: '100%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'rgb(58, 99, 197)',color: '#ffffff'}}>Log in</button>
+                                </li>
+                                <hr></hr>
 
-                        </form>
-                        <li style ={{paddingTop:20, textAlign: 'center'}}>
-                            <button onClick={handleChange('signT')} style={{alignItems: 'center', width: '30%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'green',color: '#ffffff'}}>Create New Account</button>
-                        </li>
-                    </div>
-                </li>
-            </ul>
+                            </form>
+                            <li style ={{paddingTop:20, textAlign: 'center'}}>
+                                <button onClick={handleChange('signT')} style={{alignItems: 'center', width: '30%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'green',color: '#ffffff'}}>Create New Account</button>
+                            </li>
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <SignUp signT={signT}></SignUp>
         </div>
 
