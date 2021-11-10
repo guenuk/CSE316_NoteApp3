@@ -32,45 +32,44 @@ function SignUp(props) {
 
     return(
         <div className="signUp" style={{display: signT ? 'block': 'none'}}>
-            <div className="signUp-content">
+            <div className="signUp-content" >
                 <form>
-                    <ul>
-                        <li>
-                            <div>
-                                <h2>Sign Up</h2>
-                                <button id="x" >X</button>
-                            </div>
-                        </li>
-                        <li id="name">
-                            <p style={{margin: 0}}>Name</p>
-                            <input type="text"
-                                   id="iName"
-                                   name="Name"
-                                   value = {name}
-                                   onChange={handleChange("name")}></input>
-                        </li>
-                        <li id="email">
-                            <p style={{margin: 0}}>Email</p>
-                            <input type="text"
-                                   id="iEmail"
-                                   name="Email"
-                                   value = {email}
-                                   onChange={handleChange("email")}></input>
-                        </li>
-                        <li id="password">
-                            <p style={{margin: 0}}>Password</p>
-                            <input type="text"
-                                   id="iPw"
-                                   name="pw"
-                                   value = {pw}
-                                   onChange={handleChange("pw")}></input>
-                        </li>
-                        <li>
-                            <div>
-                                <button type="submit">Save</button>
-                            </div>
-                        </li>
-                    </ul>
+                    <li>
+                        <div style={{display: 'flex' ,justifyContent: 'space-between'}}>
+                            <h2>Sign Up</h2>
+                            <button id="x" style={{border: 'none', background: 'transparent', justifyContent: 'space-between'}}>X</button>
+                        </div>
+                    </li>
+                    <li id="name">
+                        <p style={{margin: 0}}>Name</p>
+                        <input type="text"
+                               id="iName"
+                               name="Name"
+                               value = {name}
+                               style={{width: '100%', alignItems: 'center'}}
+                               onChange={handleChange("name")}></input>
+                    </li>
+                    <li id="email">
+                        <p style={{margin: 0}}>Email</p>
+                        <input type="text"
+                               id="iEmail"
+                               name="Email"
+                               value = {email}
+                               style={{width: '100%', alignItems: 'center'}}
+                               onChange={handleChange("email")}></input>
+                    </li>
+                    <li id="password">
+                        <p style={{margin: 0}}>Password</p>
+                        <input type="text"
+                               id="iPw"
+                               name="pw"
+                               value = {pw}
+                               style={{width: '100%', alignItems: 'center'}}
+                               onChange={handleChange("pw")}></input>
+                    </li>
+                    <li>
+                        <button type="submit" style={{width: '30%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'green',color: '#ffffff'}}>Save</button>
+                    </li>
                 </form>
             </div>
         </div>
