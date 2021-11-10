@@ -1,6 +1,12 @@
 import '../App.css';
 import {useEffect, useState} from "react";
-import {deleteNotesAPIMethod, getNotesAPIMethod, postNoteAPIMethod, updateNotesAPIMethod} from "../api/client";
+import {
+    deleteNotesAPIMethod,
+    getNotesAPIMethod,
+    postNoteAPIMethod,
+    registerUserAPIMethod,
+    updateNotesAPIMethod
+} from "../api/client";
 import Modal from "./Modal";
 import React from 'react'
 import ReactDom from 'react-dom'
@@ -33,6 +39,15 @@ function Main() {
             setNotes(note);
         })
     },[renderEffect])
+
+    const testRegister = () => {
+        const user1 = {
+            "password" : "123456",
+            "email" : "123asd@naver.com",
+            "name" : "a1"
+        }
+        registerUserAPIMethod(user1).then();
+    }
 
     // helpers
     const uidGen = () => {
@@ -184,6 +199,7 @@ function Main() {
                     <li>
                         <div className="menuTab" style={{display: 'flex'}}>
                             <button onClick={() => setProfileToggle(true)}>
+                            {/*<button onClick={() => testRegister()}>*/}
                                 <img src= {"./profile.JPG"} style={{width: '40px', borderRadius: '50%'}}/>
                             </button>
                             <button>

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
-const validator = require('../utils/validators')
+const bcrypt = require('bcrypt');
+const validator = require('../utils/validators');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema(

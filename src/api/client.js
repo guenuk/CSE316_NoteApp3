@@ -73,6 +73,14 @@ export const postUserAPIMethod = (user) => {
     }).then(checkStatus)
         .then(parseJSON);
 }
+export const registerUserAPIMethod = (user) => {
+    return fetch(`/api/register`, {
+        ...defaultHeaders,
+        method: 'POST', // The method defaults to GET
+        body: JSON.stringify(user),
+    }).then(checkStatus)
+        .then(parseJSON);
+}
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
