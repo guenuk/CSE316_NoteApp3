@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import '../App.css';
 import useWindowDimensions from "./UseWindowDimensions";
 import SignUp from "./SignUp";
+import {logInUserAPIMethod} from "../api/client";
 
 function Login(){
 
@@ -19,7 +20,13 @@ function Login(){
     };
     console.log(signT)
 
-
+    const testLogIn = () => {
+        const user1 = {
+            "password" : pw,
+            "email": email
+        }
+        logInUserAPIMethod(user1).then();
+    }
 
     let width = GetWidth();
 
@@ -66,7 +73,7 @@ function Login(){
                     </li>
 
                     <li>
-                        <button type="submit" style={{alignItems: 'center', width: '100%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'rgb(58, 99, 197)',color: '#ffffff'}}>Log in</button>
+                        <button onClick={testLogIn} type="submit" style={{alignItems: 'center', width: '100%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'rgb(58, 99, 197)',color: '#ffffff'}}>Log in</button>
                     </li>
                     <hr></hr>
 

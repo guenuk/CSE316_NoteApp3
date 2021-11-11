@@ -25,6 +25,7 @@ function SignUp(props) {
         registerUserAPIMethod(user1).then();
     }
 
+
     let handleChange = (prop) => (event) => {
         if (prop === "name"){
             setName(event.target.value);

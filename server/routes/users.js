@@ -6,22 +6,30 @@ const {wrapAsync} = require('../utils/helper');
 router.post('/register', wrapAsync(async function (req, res) {
     const {password, email, name} = req.body;
     // const found = await this.findOne({email});
-    const user = new User({email, password, name})
-    await user.save();
-    req.session.userId = user._id;
-    // Note: this is returning the entire user object to demo, which will include the hashed and salted password.
-    // In practice, you wouldn't typically do this – a success status would suffice, or perhaps just the user id.
-    res.json(user);
+    const found = await User.findAndValidate(email, password);
+    if(!found){
+        const user = new User({email, password, name})
+        await user.save();
+        req.session.userId = user._id;
+        res.json(user);
+    }
+    else{
+        res.sendStatus(500);
+        throw new Error("ValidationError")
+    }
 }));
 
 router.post('/login', wrapAsync(async function (req, res) {
     const {password, email} = req.body;
     const user = await User.findAndValidate(email, password);
+    console.log("hi")
     if (user) {
         req.session.userId = user._id;
         res.sendStatus(204);
+        console.log("204")
     } else {
         res.sendStatus(401);
+        console.log("401")
     }
 }));
 

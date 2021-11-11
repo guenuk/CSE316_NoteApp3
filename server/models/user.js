@@ -22,6 +22,10 @@ var UserSchema = new Schema(
             type:String,
             required:true,
             minlength: 6
+        },
+        image:{
+            type:String,
+            default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
         }
     }
 );
