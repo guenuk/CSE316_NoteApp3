@@ -11,11 +11,11 @@ router.post('/register', wrapAsync(async function (req, res) {
         const user = new User({email, password, name})
         await user.save();
         req.session.userId = user._id;
-        res.json(user);
+        res.status(200).json(user);
     }
     else{
         res.sendStatus(500);
-        throw new Error("ValidationError")
+        throw new Error("ValidationError");
     }
 }));
 
@@ -25,11 +25,11 @@ router.post('/login', wrapAsync(async function (req, res) {
     console.log("hi")
     if (user) {
         req.session.userId = user._id;
-        res.sendStatus(204);
-        console.log("204")
+        // res.sendStatus(204);
+        res.json(user);
+        // return res.json(user);
     } else {
         res.sendStatus(401);
-        console.log("401")
     }
 }));
 

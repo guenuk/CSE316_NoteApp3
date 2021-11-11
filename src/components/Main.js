@@ -208,10 +208,10 @@ function Main() {
                             <button>
                                 <span className="material-icons">search</span>
                             </button>
-                            <label style={{fontWeight: 'small'}}>Search all notes: </label>
                             <input type="text"
                                    id="iSearch"
                                    name="Search"
+                                   placeholder= "Search all notes: "
                                    value = {searchKey}
                                    style={{border: 'none'}}
                                    onChange={handleChange2}>

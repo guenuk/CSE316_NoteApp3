@@ -1,11 +1,12 @@
 import react, {useEffect, useState} from "react";
 import React from "react";
-import {getUsersAPIMethod, updateUsersAPIMethod} from "../api/client";
+import {getUsersAPIMethod, updateUsersAPIMethod, uploadImageToCloudinaryAPIMethod} from "../api/client";
 
 function Modal(props) {
     const [name, setName] = useState();
     const [email,setEmail] = useState();
     const [location,setLocation] = useState();
+    const [profile, setProfile] = useState();
     const [profileToggle,setProfileToggle] = useState(props.profileToggle);
 
     useEffect(() => {
@@ -13,8 +14,35 @@ function Modal(props) {
             setName(user[0].name);
             setEmail(user[0].email);
             setLocation(user[0].location);
+            setProfile(user[0].image);
         })
     },[])
+    const removeImage = () => {
+        setProfile("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
+        //user 연동 필요
+    }
+
+    const handleImageSelected = (event) => {
+        console.log("New File Selected");
+        if (event.target.files && event.target.files[0]) {
+
+            const selectedFile = event.target.files[0];
+            console.dir(selectedFile);
+
+            const formData = new FormData();
+            const unsignedUploadPreset = 'e9uuow7f'
+            formData.append('file', selectedFile);
+            formData.append('upload_preset', unsignedUploadPreset);
+
+            console.log("Cloudinary upload");
+            uploadImageToCloudinaryAPIMethod(formData).then((response) => {
+                console.log("Upload success");
+                console.dir(response);
+                //update user
+                setProfile(response.url);
+            });
+        }
+    }
 
 
 
@@ -81,11 +109,15 @@ function Modal(props) {
                         <li>
                             <div className="pTab">
                                 <img className="avatar"
-                                     src="./profile.JPG"
+                                     src = {profile}
                                      style={{width: '40px', borderRadius: '50%'}}
                                 />
-                                <button type="button">Choose New Image</button>
-                                <button type="button">Remove Image</button>
+                                <label htmlFor="file-upload" className="custom-file-upload">
+                                    Choose new Image
+                                </label>
+                                <input id="file-upload" type="file"/>
+                                {/*<input placeholder="Choose New Image" type="file" name="image" accept="image/*" id="cloudinary" onChange={handleImageSelected}/>*/}
+                                <button onClick={removeImage} type="button">Remove Image</button>
                             </div>
                         </li>
                         <li id="name">

@@ -4,11 +4,13 @@ import useWindowDimensions from "./UseWindowDimensions";
 import SignUp from "./SignUp";
 import {logInUserAPIMethod} from "../api/client";
 
+
 function Login(){
 
     const [email, setEmail] = useState();
     const [pw, setPw] = useState();
     const [signT, setSignT] = useState();
+    const [error, setError] = useState();
 
     useEffect(() => {
         setSignT(signT);
@@ -20,12 +22,15 @@ function Login(){
     };
     console.log(signT)
 
-    const testLogIn = () => {
+    const testLogIn = (e) => {
+        // e.preventDefault();
         const user1 = {
             "password" : pw,
             "email": email
         }
-        logInUserAPIMethod(user1).then();
+        logInUserAPIMethod(user1).then((user) =>{
+
+        });
     }
 
     let width = GetWidth();

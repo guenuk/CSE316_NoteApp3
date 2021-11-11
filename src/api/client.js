@@ -87,21 +87,34 @@ export const logInUserAPIMethod = (user) => {
         ...defaultHeaders,
         method: 'POST', // The method defaults to GET
         body: JSON.stringify(user),
-    }).then(checkStatus)
-        .then(parseJSON);
+    }).then(checkStatus).then(parseJSON);
 }
 
 export const logOutUserAPIMethod = () => {
-    return fetch(`/api/logout`, {
-        ...defaultHeaders,
-    }).then(checkStatus)
-        .then(parseJSON);
+        return fetch(`/api/logout`, {
+            ...defaultHeaders,
+        }).then((res) =>{
+            try{
+                checkStatus(res);
+            }
+            catch (e){
+                return e.statusText;
+            }
+        }).then(parseJSON);
+
+}
+
+export const uploadImageToCloudinaryAPIMethod = (formData) => {
+    const cloudName = 'dxvrj0lkv'
+    return fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+        method: 'POST',
+        body: formData,
+    }).then(checkStatus).then(parseJSON);
 }
 
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
-
         return response;
     } else {
         console.log("ERROROROROR")
