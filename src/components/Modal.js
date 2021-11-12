@@ -112,11 +112,11 @@ function Modal(props) {
                                      src = {profile}
                                      style={{width: '40px', borderRadius: '50%'}}
                                 />
-                                <label htmlFor="file-upload" className="custom-file-upload">
-                                    Choose new Image
-                                </label>
-                                <input id="file-upload" type="file"/>
-                                {/*<input placeholder="Choose New Image" type="file" name="image" accept="image/*" id="cloudinary" onChange={handleImageSelected}/>*/}
+                                {/*<label htmlFor="file-upload" className="custom-file-upload">*/}
+                                {/*    Choose new Image*/}
+                                {/*</label>*/}
+                                {/*<input id="file-upload" type="file" name = "image" accept="image/*" id="cloudinary" onChange={handleImageSelected}/>*/}
+                                <input id="file-upload" className="custom-file-upload" placeholder="Choose New Image" type="file" name="image" accept="image/*" id="cloudinary" onChange={handleImageSelected}/>
                                 <button onClick={removeImage} type="button">Remove Image</button>
                             </div>
                         </li>
@@ -147,7 +147,7 @@ function Modal(props) {
                         <li>
                             <div className="pTab3">
                                 <button className="save" type="submit">Save</button>
-                                <button className="logout" type="button">Logout</button>
+                                <button onClick={props.logout} className="logout" type="button">Logout</button>
                             </div>
                         </li>
                     </ul>

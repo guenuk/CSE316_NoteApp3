@@ -5,7 +5,7 @@ import SignUp from "./SignUp";
 import {logInUserAPIMethod} from "../api/client";
 
 
-function Login(){
+function Login(props){
 
     const [email, setEmail] = useState();
     const [pw, setPw] = useState();
@@ -16,6 +16,10 @@ function Login(){
         setSignT(signT);
     },[signT])
 
+    // useEffect(() =>{
+    //     setLogIn(logIn);
+    // }, [props])
+
     const GetWidth = () => {
         const {width, height} = useWindowDimensions();
         return width;
@@ -23,13 +27,18 @@ function Login(){
     console.log(signT)
 
     const testLogIn = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         const user1 = {
             "password" : pw,
             "email": email
         }
-        logInUserAPIMethod(user1).then((user) =>{
-
+        logInUserAPIMethod(user1).then((ret) =>{
+            if(ret == "Success"){
+                props.setLogin(true);
+            }
+            else{
+                setError(ret);
+            }
         });
     }
 
@@ -76,7 +85,9 @@ function Login(){
                                style={{width: '100%', height: '20px'}}
                                onChange={handleChange("pw")}></input>
                     </li>
-
+`                   <li>
+                        {error?<label style = {{color: 'red'}}>{error}</label>:<></>}
+                    </li>
                     <li>
                         <button onClick={testLogIn} type="submit" style={{alignItems: 'center', width: '100%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'rgb(58, 99, 197)',color: '#ffffff'}}>Log in</button>
                     </li>

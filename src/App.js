@@ -22,19 +22,19 @@ const NoMatch = ({location}) => (
 );
 
 function App() {
+    const [logIn, setLogIn] = useState();
+
+    useEffect(() =>{
+        setLogIn(logIn)
+    }, [logIn])
+
     return (
         <BrowserRouter>
             <div className="App">
-                <Switch>
-                    <Route path='/main' component={Main}/>
-                    <Route path='/log-in' component={Login}/>
-                    <Route exact path='/' render={() => (
-                        <Redirect
-                            to='/main'
-                        />
-                    )}/>
-                    <Route component={NoMatch}/>
-                </Switch>
+                {(logIn)
+                    ?<Main setLogin ={setLogIn}></Main>
+                    : <Login logIn = {logIn}
+                           setLogin = {setLogIn}></Login>}
             </div>
         </BrowserRouter>
     );

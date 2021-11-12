@@ -2,7 +2,7 @@ import '../App.css';
 import {useEffect, useState} from "react";
 import {
     deleteNotesAPIMethod,
-    getNotesAPIMethod,
+    getNotesAPIMethod, logOutUserAPIMethod,
     postNoteAPIMethod,
     registerUserAPIMethod,
     updateNotesAPIMethod
@@ -15,7 +15,7 @@ import remarkGfm from 'remark-gfm'
 import useWindowDimensions from "./UseWindowDimensions";
 import Memo from "./Memo";
 
-function Main() {
+function Main(props) {
 
     const [notes, setNotes] = useState([]);
     const [currMemo, setCurrMemo] = useState(-1);
@@ -43,6 +43,16 @@ function Main() {
 
 
     // helpers
+
+    const logout = () => {
+        logOutUserAPIMethod().then(res => {
+            console.log(res);
+            if(res =="Success"){
+                props.setLogin(false);
+            }
+        });
+    }
+
     const uidGen = () => {
         let curr = JSON.parse(localStorage.getItem('UID'));
         localStorage.setItem('UID', curr+1);
@@ -273,7 +283,8 @@ function Main() {
                     </li>
                 </ul>
             </div>
-            <Modal profileToggle = {profileToggle}></Modal>
+            <Modal profileToggle = {profileToggle}
+                logout = {logout}></Modal>
         </div>
     );
 }

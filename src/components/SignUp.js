@@ -7,22 +7,32 @@ function SignUp(props) {
     const [email,setEmail] = useState();
     const [pw,setPw] = useState();
     const [signT, setSignT] = useState(props.signT);
+    const [error, setError] = useState();
 
     useEffect(() => {
-
-    },[])
+        setError(error);
+    },[error])
 
     useEffect(()=>{
         setSignT(props.signT)
     },[props])
 
-    const testRegister = () => {
+    const testRegister = (e) => {
+
         const user1 = {
             "password" : pw,
             "email" : email,
             "name" : name
         }
-        registerUserAPIMethod(user1).then();
+        registerUserAPIMethod(user1).then(ret => {
+            console.log(ret);
+            if(ret == "Success"){
+            }
+            else{
+                e.preventDefault();
+                setError(ret);
+            }
+        });
     }
 
 
@@ -77,6 +87,9 @@ function SignUp(props) {
                                value = {pw}
                                style={{width: '100%', alignItems: 'center'}}
                                onChange={handleChange("pw")}></input>
+                    </li>
+                    <li>
+                        {error?<label style = {{color: 'red'}}>{error}</label>:<></>}
                     </li>
                     <li>
                         <button onClick={testRegister} type="submit" style={{width: '30%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'green',color: '#ffffff'}}>Save</button>

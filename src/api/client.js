@@ -79,28 +79,38 @@ export const registerUserAPIMethod = (user) => {
         method: 'POST', // The method defaults to GET
         body: JSON.stringify(user),
 
-    }).then(checkStatus)
-        .then(parseJSON);
+    }).then(response =>{
+        if(response.status >= 500){
+            return "Validation Error. Check Email or Password";
+        }
+        else{
+            return "Success";
+        }
+    });
 }
 export const logInUserAPIMethod = (user) => {
     return fetch(`/api/login`, {
         ...defaultHeaders,
         method: 'POST', // The method defaults to GET
         body: JSON.stringify(user),
-    }).then(checkStatus).then(parseJSON);
+    }).then(response =>{
+        if(response.status >400){
+            return "Invalid email or password. Try Again"
+        }
+        else{
+            return "Success"
+        }
+    });
 }
 
 export const logOutUserAPIMethod = () => {
         return fetch(`/api/logout`, {
             ...defaultHeaders,
         }).then((res) =>{
-            try{
-                checkStatus(res);
+            if(res.status > 200){
+                return "Success";
             }
-            catch (e){
-                return e.statusText;
-            }
-        }).then(parseJSON);
+        });
 
 }
 
