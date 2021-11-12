@@ -34,6 +34,7 @@ function Login(props){
         }
         logInUserAPIMethod(user1).then((ret) =>{
             if(ret == "Success"){
+                props.setCurrUser(email);
                 props.setLogin(true);
             }
             else{
@@ -85,7 +86,7 @@ function Login(props){
                                style={{width: '100%', height: '20px'}}
                                onChange={handleChange("pw")}></input>
                     </li>
-`                   <li>
+                    <li>
                         {error?<label style = {{color: 'red'}}>{error}</label>:<></>}
                     </li>
                     <li>

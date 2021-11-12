@@ -23,17 +23,23 @@ const NoMatch = ({location}) => (
 
 function App() {
     const [logIn, setLogIn] = useState();
+    const [currUser, setCurrUser] = useState();
 
     useEffect(() =>{
         setLogIn(logIn)
     }, [logIn])
+    useEffect(() =>{
+        setCurrUser(currUser)
+    }, [currUser])
 
     return (
         <BrowserRouter>
             <div className="App">
                 {(logIn)
-                    ?<Main setLogin ={setLogIn}></Main>
+                    ?<Main setLogin ={setLogIn}
+                           currUser = {currUser}></Main>
                     : <Login logIn = {logIn}
+                             setCurrUser = {setCurrUser}
                            setLogin = {setLogIn}></Login>}
             </div>
         </BrowserRouter>

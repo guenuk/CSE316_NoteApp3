@@ -10,7 +10,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 const session = require('express-session');
-const MongoStore = require('connect-mongo'); // MongoDB session store
+const MongoStore = require('connect-mongo');
+const {isLoggedIn} = require("./middleware/auth"); // MongoDB session store
 
 var mongoDB = 'mongodb://localhost:27017/Note_App';
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
@@ -83,29 +84,31 @@ app.use((err, req, res, next) => {
 // ::::::NOTES:::::: Get all Notes/ Create new note / Update a note / Delete a note
 const url = 'http://localhost:8500';
 
-app.get('/api/notes', wrapAsync(async function (req,res) {
+app.get('/api/notes',isLoggedIn, wrapAsync(async function (req,res) {
     const notes = await Note.find({});
+    // const notes = await Note.findById(req.session.userId);
     res.json(notes);
 }));
 
-app.post('/api/notes', wrapAsync(async function (req, res) {
+app.post('/api/notes',isLoggedIn, wrapAsync(async function (req, res) {
     console.log("Posted with body: " + JSON.stringify(req.body));
     const newNote = new Note({
         num: req.body.num,
         text: req.body.text,
         lastUpdatedDate: req.body.lastUpdatedDate,
+
     })
     await newNote.save();
     res.json(newNote);
 }));
-app.put('/api/notes/:id', wrapAsync(async function (req, res) {
+app.put('/api/notes/:id',isLoggedIn, wrapAsync(async function (req, res) {
     const id = req.params.id;
     console.log("PUT with id: " + id + ", body: " + JSON.stringify(req.body));
     await Note.findByIdAndUpdate(id, {'text': req.body.text, "lastUpdatedDate": req.body.lastUpdatedDate, 'num': req.body.num},
         {runValidators: true});
     res.sendStatus(204);
 }));
-app.delete('/api/notes/:id', wrapAsync(async function (req, res) {
+app.delete('/api/notes/:id',isLoggedIn, wrapAsync(async function (req, res) {
     const id = req.params.id;
     const result = await Note.findByIdAndDelete(id);
     console.log("Deleted successfully: " + result);
@@ -118,7 +121,6 @@ app.get('/api/users', wrapAsync(async function (req,res) {
     const users = await User.find({});
     res.json(users);
 }));
-
 app.post('/api/users', wrapAsync(async function (req, res) {
     console.log("Posted with body: " + JSON.stringify(req.body));
     const newUser = new User({

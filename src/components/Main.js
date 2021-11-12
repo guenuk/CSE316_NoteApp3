@@ -24,6 +24,7 @@ function Main(props) {
     const [profileToggle, setProfileToggle] = useState(false);
     const [searchToggle, setSearchToggle] = useState(false); //false when searchKey.length == 0
     const [renderEffect, setRenderEffect] = useState(false);
+    const [currUser, setCurrUser] = useState(props.currUser);
 
     //init val from server
     useEffect(()=>{
@@ -38,8 +39,9 @@ function Main(props) {
         getNotesAPIMethod().then((note) => {
             setNotes(note);
         })
-    },[renderEffect])
 
+    },[renderEffect])
+    console.log(currUser);
 
 
     // helpers

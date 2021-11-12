@@ -1,4 +1,3 @@
-const Author = require('../models/author');
 const {wrapAsync} = require('../utils/helper');
 
 module.exports.isLoggedIn = (req, res, next) => {
