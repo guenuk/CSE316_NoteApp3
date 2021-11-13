@@ -7,6 +7,7 @@ var NoteSchema = new Schema(
         num: Number,
         text: String,
         lastUpdatedDate: String,
+        user: { type: Schema.Types.ObjectId, ref: 'User', required: false },
     }
 );
 

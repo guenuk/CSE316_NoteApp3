@@ -85,7 +85,13 @@ app.use((err, req, res, next) => {
 const url = 'http://localhost:8500';
 
 app.get('/api/notes',isLoggedIn, wrapAsync(async function (req,res) {
-    const notes = await Note.find({});
+    const notes = await Note.find({user: req.session.userId});
+    // const notes = await Note.find((note)=>{
+    //     if(note.user==req.session.userId){
+    //         return note;
+    //     }
+    // });
+
     // const notes = await Note.findById(req.session.userId);
     res.json(notes);
 }));
@@ -96,7 +102,7 @@ app.post('/api/notes',isLoggedIn, wrapAsync(async function (req, res) {
         num: req.body.num,
         text: req.body.text,
         lastUpdatedDate: req.body.lastUpdatedDate,
-
+        user: req.session ? req.session.userId: null
     })
     await newNote.save();
     res.json(newNote);
