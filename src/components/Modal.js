@@ -17,8 +17,12 @@ function Modal(props) {
             setProfile(user[0].image);
         })
     },[])
+
+
     const removeImage = () => {
         setProfile("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
+        updateUsersAPIMethod("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg").then();
+
         //user 연동 필요
     }
 
@@ -39,7 +43,10 @@ function Modal(props) {
                 console.log("Upload success");
                 console.dir(response);
                 //update user
-                setProfile(response.url);
+                const temp = {image: response.url}
+                updateUsersAPIMethod(temp).then(()=>{
+                    setProfile(response.url);
+                })
             });
         }
     }
@@ -89,7 +96,9 @@ function Modal(props) {
         setProfileToggle(props.profileToggle)
     },[props])
 
-    const pClose = () => {
+    const pClose = (e) => {
+        e.preventDefault();
+        props.setPT(false);
         setProfileToggle(false)
     }
 

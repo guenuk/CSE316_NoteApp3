@@ -124,7 +124,9 @@ app.delete('/api/notes/:id',isLoggedIn, wrapAsync(async function (req, res) {
 // ::::::USER:::::: Get/Create/Update/Delete
 
 app.get('/api/users', wrapAsync(async function (req,res) {
-    const users = await User.find({});
+    console.log(req.session.userId);
+    const users = await User.find({_id: req.session.userId});
+    console.log(users);
     res.json(users);
 }));
 app.post('/api/users', wrapAsync(async function (req, res) {
@@ -137,10 +139,9 @@ app.post('/api/users', wrapAsync(async function (req, res) {
     await newUser.save();
     res.json(newUser);
 }));
-app.put('/api/users/:id', wrapAsync(async function (req, res) {
-    const id = req.params.id;
-    console.log("PUT with id: " + id + ", body: " + JSON.stringify(req.body));
-    await User.findByIdAndUpdate(id, {'name': req.body.name, "email": req.body.email, "location": req.body.location},
+app.put('/api/users/', wrapAsync(async function (req, res) {
+    console.log(req.body);
+    await User.findByIdAndUpdate(req.session.userId, {'image': req.body.image},
         {runValidators: true});
     res.sendStatus(204);
 }));

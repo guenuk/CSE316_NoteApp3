@@ -47,12 +47,11 @@ export const getUsersAPIMethod = () => {
         .then(parseJSON);
 }
 
-export const updateUsersAPIMethod = (user , nUser) => {
-    console.log(user);
-    return fetch(`/api/users/${user._id}`, {
+export const updateUsersAPIMethod = (newP) => {
+    return fetch(`/api/users/`, {
         ...defaultHeaders,
         method: 'PUT',
-        body: JSON.stringify(nUser),
+        body: JSON.stringify(newP),
     }).then(checkStatus);
 }
 

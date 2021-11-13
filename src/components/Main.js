@@ -2,7 +2,7 @@ import '../App.css';
 import {useEffect, useState} from "react";
 import {
     deleteNotesAPIMethod,
-    getNotesAPIMethod, logOutUserAPIMethod,
+    getNotesAPIMethod, getUsersAPIMethod, logOutUserAPIMethod,
     postNoteAPIMethod,
     registerUserAPIMethod,
     updateNotesAPIMethod
@@ -23,15 +23,21 @@ function Main(props) {
     const [backToggle, setbackToggle] = useState(false);
     const [profileToggle, setProfileToggle] = useState(false);
     const [searchToggle, setSearchToggle] = useState(false); //false when searchKey.length == 0
+    const [profilePic, setProfilePic] = useState();
     const [renderEffect, setRenderEffect] = useState(false);
-    const [currUser, setCurrUser] = useState(props.currUser);
+    const [currUser, setCurrUser] = useState();
 
     //init val from server
     useEffect(()=>{
         getNotesAPIMethod().then((note) => {
             setNotes(note);
         })
+        getUsersAPIMethod().then(u =>{
+            setCurrUser(u[0]);
+        })
+
     },[]);
+
 
 
     //for rerendering
@@ -42,6 +48,7 @@ function Main(props) {
 
     },[renderEffect])
     console.log(currUser);
+    console.log(profilePic);
 
 
     // helpers
@@ -197,6 +204,7 @@ function Main(props) {
         console.log(note);
     })
 
+    console.log(currUser ==null);
     return (
         <div className="App" style= {{display:'flex'}}>
             <div className="class1" style={!(backToggle || width>500) ? {display: 'none'} : (backToggle && width<=500) ? {width: '100%', height: '100%'} :{visibility: 'visible'}}>
@@ -205,7 +213,7 @@ function Main(props) {
                         <div className="menuTab" style={{display: 'flex'}}>
                             <button onClick={() => setProfileToggle(true)}>
                             {/*<button onClick={() => testRegister()}>*/}
-                                <img src= {"./profile.JPG"} style={{width: '40px', borderRadius: '50%'}}/>
+                                <img src= {currUser == null? 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg' : currUser.image} style={{width: '40px', borderRadius: '50%'}}/>
                             </button>
                             <button>
                                 <p style={{fontWeight: "bold"}}>My Notes</p>
@@ -286,6 +294,7 @@ function Main(props) {
                 </ul>
             </div>
             <Modal profileToggle = {profileToggle}
+                   setPT = {setProfileToggle}
                 logout = {logout}></Modal>
         </div>
     );
