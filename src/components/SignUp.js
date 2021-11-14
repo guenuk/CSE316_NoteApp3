@@ -13,12 +13,16 @@ function SignUp(props) {
         setError(error);
     },[error])
 
+    useEffect(() => {
+        setSignT(signT);
+    },[signT])
+
     useEffect(()=>{
         setSignT(props.signT)
     },[props])
 
     const testRegister = (e) => {
-
+        e.preventDefault();
         const user1 = {
             "password" : pw,
             "email" : email,
@@ -27,9 +31,11 @@ function SignUp(props) {
         registerUserAPIMethod(user1).then(ret => {
             console.log(ret);
             if(ret == "Success"){
+                setSignT(false);
+                console.log(signT)
+                props.setSignT(false);
             }
             else{
-                e.preventDefault();
                 setError(ret);
             }
         });

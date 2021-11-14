@@ -11,7 +11,7 @@ router.post('/register', wrapAsync(async function (req, res) {
         const user = new User({email, password, name})
         await user.save();
         req.session.userId = user._id;
-        res.status(200);
+        res.sendStatus(200);
     }
     else{
         res.sendStatus(500);

@@ -21,7 +21,13 @@ function Modal(props) {
 
     const removeImage = () => {
         setProfile("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
-        updateUsersAPIMethod("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg").then();
+        const temp = {
+            image: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+            location: location,
+            email:email,
+            name: name
+        }
+        updateUsersAPIMethod(temp).then();
 
         //user 연동 필요
     }
@@ -43,7 +49,12 @@ function Modal(props) {
                 console.log("Upload success");
                 console.dir(response);
                 //update user
-                const temp = {image: response.url}
+                const temp = {
+                    image: response.url,
+                    location: location,
+                    email:email,
+                    name: name
+                }
                 updateUsersAPIMethod(temp).then(()=>{
                     setProfile(response.url);
                 })
@@ -56,39 +67,33 @@ function Modal(props) {
     let handleChange = (prop) => (event) => {
         if (prop === "name"){
             setName(event.target.value);
-            const newUser = {
-                'name': event.target.value,
-                'email' : email,
-                'location' : location
+            const temp = {
+                image: profile,
+                location: location,
+                email:email,
+                name: event.target.value
             }
-            getUsersAPIMethod().then(user => {
-                const user1 = user[0];
-                updateUsersAPIMethod(user1, newUser).then();
-            })
+            updateUsersAPIMethod(temp).then()
         }
         else if (prop === "email"){
             setEmail(event.target.value);
-            const newUser = {
-                'name': name,
-                'email' : event.target.value,
-                'location' : location
+            const temp = {
+                image: profile,
+                location: location,
+                email:event.target.value,
+                name: name
             }
-            getUsersAPIMethod().then(user => {
-                const user1 = user[0];
-                updateUsersAPIMethod(user1, newUser).then();
-            })
+            updateUsersAPIMethod(temp).then()
         }
         else if (prop === "location"){
             setLocation(event.target.value);
-            const newUser = {
-                'name': name,
-                'email' : email,
-                'location' : event.target.value
+            const temp = {
+                image: profile,
+                location: event.target.value,
+                email:email,
+                name: name
             }
-            getUsersAPIMethod().then(user => {
-                const user1 = user[0];
-                updateUsersAPIMethod(user1, newUser).then();
-            })
+            updateUsersAPIMethod(temp).then()
         }
     }
 
@@ -155,7 +160,7 @@ function Modal(props) {
                         </li>
                         <li>
                             <div className="pTab3">
-                                <button className="save" type="submit">Save</button>
+                                <button onClick={pClose} className="save" type="submit">Save</button>
                                 <button onClick={props.logout} className="logout" type="button">Logout</button>
                             </div>
                         </li>

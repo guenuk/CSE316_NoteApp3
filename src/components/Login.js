@@ -99,7 +99,8 @@ function Login(props){
                     <button onClick={handleChange('signT')} style={{alignItems: 'center', width: '30%', height: '35px',border: 'none', borderRadius: '10px' ,backgroundColor: 'green',color: '#ffffff'}}>Create New Account</button>
                 </li>
             </div>
-            <SignUp signT={signT}></SignUp>
+            <SignUp signT={signT}
+                    setSignT = {setSignT}></SignUp>
         </div>
 
     );

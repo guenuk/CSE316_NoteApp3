@@ -141,7 +141,7 @@ app.post('/api/users', wrapAsync(async function (req, res) {
 }));
 app.put('/api/users/', wrapAsync(async function (req, res) {
     console.log(req.body);
-    await User.findByIdAndUpdate(req.session.userId, {'image': req.body.image},
+    await User.findByIdAndUpdate(req.session.userId, {'image': req.body.image, 'location': req.body.location, 'email': req.body.email, 'name':req.body.name},
         {runValidators: true});
     res.sendStatus(204);
 }));
